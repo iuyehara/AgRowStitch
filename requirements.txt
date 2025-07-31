@@ -1,0 +1,9 @@
+ipykernel
+numpy
+opencv-python
+pandas
+PyYAML
+scipy
+torch
+torchvision
+
