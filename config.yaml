@@ -1,0 +1,49 @@
+################
+#Basic Settings#
+################
+image_directory: D:\\Earl
+stitching_direction: "RIGHT" #("LEFT", "RIGHT", "UP", "DOWN") #LEFT for Monopod and Amiga, UP for T4
+mask: [0, 0, 0, 0] #Pixels to remove from original image edges [left edge, right edge, top edge, bottom edge]
+#Monopod: [0, 0, 0, 0]; Amiga: [0, 0, 420, 0]; T4: [640, 640, 0, 0]
+forward_limit: 8 #integer, should be adjusted based on overlap between subsequent images, 5-8 for Monopod, 4 for Amiga and 3 for T4
+max_reprojection_error: 1.0 # float, 0.25-5.0 is recommended, should go up with higher resolution images, 3 for Monopod, 0.5, 1.0 for Amiga and T4
+device: "cuda"  #Use "cuda" for GPU, "cpu" for single processor or "multiprocessing" for parallel CPUs, specify CPU count as second argument
+
+###############
+#Save Settings#
+###############
+final_resolution: 1.0 #1.0 for native resolution, float
+seam_resolution: 0.15 #Lower values accelerate stitching process
+save_full_resolution: True #True or False
+save_resized_resolution: False #True or False
+final_size: [71628, 0] #[width, height] pixel dimensions where width is the dimension of camera movement, use zero if one dimension is free to maintain aspect ratio and the other is fixed, integers
+crop_size: 0 #integer, if the free dimension in final size should be cropped or padded to a specific pixel dimension, 0 for nothing
+save_low_resolution: False #True or False
+low_resolution: 0.1 #downscaling factor, float
+save_output: False #True or False if False, delete intermediate files after finishing
+
+###################
+#Advanced Settings#
+###################
+verbose: True #True or False, log and print detailed information during the stitching process, otherwise just warnings
+batch_size: 10 #integer, 10-20 is recommended, large batch sizes increase total run time
+keypoint_prop: 0.5 #Should by multiple of 0.1, float in range 0.1 to 1.0 
+xy_ratio: 0.75 #float, #minimum direction of travel/normal direction of travel in homography
+scale_constraint: 0.3 #float, #maximum value that abs(scale-1) can take in homography
+min_inliers: 20 #integer, 20-50 is recommended
+max_RANSAC_thresh: 6 #float, 1-10 is recommended, should be higher than max_reprojection_error, roughly twice as high
+camera: "spherical" #("spherical", "partial_affine") spherical is recommended unless camera orientation is stable
+final_straighten: True #True or False
+points_per_image: 10 #int, density of points when creating splines for straightening, 5-10 should be sufficient
+straightening_threshold: 0.0001 #float, threshold in slope change that triggers straightening, 0.0001 - 0.001 should work
+
+##############
+#GPS settings#
+##############
+#If there is GPS information linked to each image, there should be a "gps.csv" file in the image_directory
+#with columns "image", "latitude", and "longitude". An output file will be written in the final output path
+#with columns "image", "latitude", "longitude", "x", and "y", where (0,0) is the top left corner and x is the horizontal
+GPS: False #True or False
+#Change the orientation of final panorama before saving, if False camera movement will be right to left (stitching edge left)
+#"COMPASS" for NSEW orientation on screen if GPS is True, which will assume beds are aligned with one cardinal direction
+change_orientation: False #False, "90CW", "90CCW", "180" for clockwise, counterclockwise, or reverse direction --  or "COMPASS" for North is up
