@@ -2129,7 +2129,7 @@ def resize_panorama(panorama, config):
     else:
         scalex, scaley, padx, pady = width/panorama.shape[1], height/panorama.shape[0], 0, 0
         final_size = cv2.resize(panorama, (width, height), interpolation=cv2.INTER_NEAREST)
-    print(scalex, scaley, padx, pady)
+
     return final_size, scalex, scaley, padx, pady
     
 def stitch_final_mosaic(config):
@@ -2578,6 +2578,7 @@ def run(config_path, cpu_count):
             ###############################################
             num_processes = min(cpu_count, len(subfolders))
             print("Proceeding with {} processes".format(num_processes))
+            multiprocessing.set_start_method('spawn') #Since we check number of devices before starting the processes, this is not fork safe
             with multiprocessing.Pool(processes = num_processes) as pool:
                 try:
                     results = pool.starmap(run_batches, zip(itertools.repeat(base_config), subfolders, itertools.repeat(parent_directory)))
