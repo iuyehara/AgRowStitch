@@ -1,4 +1,3 @@
-ipykernel
 numpy
 opencv-python
 pandas
