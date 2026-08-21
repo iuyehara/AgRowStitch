@@ -1,5 +1,7 @@
 # AgRowStitch
-An image stitching pipeline for agricultural rows.
+An image stitching pipeline for agricultural rows. Read the full paper here: [[https://elibrary.asabe.org/azdez.asp?JID=3&AID=55882&CID=aeaj2026&v=42&i=3&T=1&redirType=](https://doi.org/10.13031/aea.16650)](https://doi.org/10.13031/aea.16650)
+
+
 
 ## Installation
 
